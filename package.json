@@ -75,6 +75,9 @@
     "eslint-plugin-vue": "^9.17.0",
     "sass": "^1.75.0",
     "postcss": "^8.4.38"
+  },
+  "engines": {
+    "node": ">=18.20.7"
   }
 }
 
