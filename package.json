@@ -57,7 +57,7 @@
     "output": "CHANGELOG.md",
     "template": "compact",
     "unreleased": true,
-    "commitLimit": true
+    "commitLimit": false
   },
   "husky": {
     "hooks": {
