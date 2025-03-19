@@ -1,7 +1,4 @@
-
-
 export default {
-  
   mini: {},
-  h5: {}
+  h5: {},
 }

@@ -9,11 +9,11 @@ import { ref } from 'vue'
 import './index.scss'
 
 export default {
-  setup () {
+  setup() {
     const msg = ref('hello taro')
     return {
-      msg
+      msg,
     }
-  }
+  },
 }
 </script>

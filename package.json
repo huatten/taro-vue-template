@@ -29,8 +29,10 @@
     "dev:qq": "npm run build:qq -- --watch",
     "dev:jd": "npm run build:jd -- --watch",
     "dev:harmony-hybrid": "npm run build:harmony-hybrid -- --watch",
-    "cm": "git add -A && git cz && git push",
-    "log": "auto-changelog -p --sort-commits date-desc && git add CHANGELOG.md"
+    "lint:eslint": "eslint --ext .vue,.js,jsx,.ts,.tsx ./ --max-warnings 0 --cache --cache-location node_modules/.cache/eslint/ --fix",
+    "format": "prettier --write .",
+    "cm": "npm run log && git add -A && git cz && git push",
+    "log": "auto-changelog -p --sort-commits date-desc"
   },
   "browserslist": {
     "development": [
@@ -73,7 +75,8 @@
     "vue": "^3.5.13"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.4",
+    "@babel/core": "^7.26.10",
+    "@babel/eslint-parser": "^7.26.10",
     "@babel/plugin-proposal-class-properties": "7.14.5",
     "@commitlint/config-conventional": "^19.8.0",
     "@tarojs/cli": "4.0.9",
@@ -83,14 +86,17 @@
     "auto-changelog": "^2.5.0",
     "babel-preset-taro": "4.0.9",
     "cz-git": "^1.11.1",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
+    "eslint-config-alloy": "^5.1.2",
     "eslint-config-taro": "4.0.9",
-    "eslint-plugin-vue": "^9.17.0",
+    "eslint-plugin-vue": "^9.33.0",
+    "prettier": "^3.5.3",
     "postcss": "^8.4.38",
     "sass": "^1.75.0",
     "stylelint": "^16.4.0",
     "terser": "^5.30.4",
-    "vite": "^4.5.9"
+    "vite": "^4.5.9",
+    "vue-eslint-parser": "^10.1.1"
   },
   "engines": {
     "node": ">=18.20.7"
