@@ -29,7 +29,8 @@
     "dev:qq": "npm run build:qq -- --watch",
     "dev:jd": "npm run build:jd -- --watch",
     "dev:harmony-hybrid": "npm run build:harmony-hybrid -- --watch",
-    "cm": "git add -A && git cz && git push"
+    "cm": "git add -A && git cz && git push",
+    "log": "auto-changelog -p --sort-commits date-desc && git add CHANGELOG.md"
   },
   "browserslist": {
     "development": [
@@ -46,6 +47,12 @@
     "commitizen": {
       "path": "node_modules/cz-git"
     }
+  },
+  "auto-changelog": {
+    "output": "CHANGELOG.md",
+    "template": "compact",
+    "unreleased": true,
+    "commitLimit": true
   },
   "dependencies": {
     "@babel/runtime": "^7.24.4",
@@ -73,6 +80,7 @@
     "@tarojs/vite-runner": "4.0.9",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "auto-changelog": "^2.5.0",
     "babel-preset-taro": "4.0.9",
     "cz-git": "^1.11.1",
     "eslint": "^8.57.0",
