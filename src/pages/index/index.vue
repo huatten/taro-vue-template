@@ -4,16 +4,11 @@
   </view>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue'
 import './index.scss'
-
-export default {
-  setup() {
-    const msg = ref('hello taro')
-    return {
-      msg,
-    }
-  },
-}
+import { useStore } from '../../stores'
+const appStore = useStore('app')
+console.log(appStore)
+const msg = ref('Hello Taro')
 </script>
