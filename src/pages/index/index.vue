@@ -1,13 +1,12 @@
 <template>
   <view class="index">
-    <text>{{ msg }}</text>
+    <nut-button>{{ msg }}</nut-button>
   </view>
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import './index.scss'
-import { useStore } from '../../stores'
+import { useStore } from '@/stores'
 const appStore = useStore('app')
 console.log(appStore)
 const msg = ref('Hello Taro')

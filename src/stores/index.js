@@ -1,12 +1,16 @@
 import { createPinia } from 'pinia'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { createPersistedState } from 'pinia-plugin-persistedstate'
 import { registerStores } from './register'
-
+import { storage } from './storage'
 // 创建pinia实例
 export const pinia = createPinia()
 
 // 持久化插件
-pinia.use(piniaPluginPersistedstate)
+pinia.use(
+  createPersistedState({
+    storage,
+  }),
+)
 
 // 注册存储实例
 export const storeModules = registerStores(pinia)

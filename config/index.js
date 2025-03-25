@@ -1,30 +1,55 @@
 import { defineConfig } from '@tarojs/cli'
-
+import NutUIResolver from '@nutui/auto-import-resolver'
+import Components from 'unplugin-vue-components/webpack'
+import AutoImport from 'unplugin-auto-import/webpack'
+import path from 'path'
 import devConfig from './dev'
 import prodConfig from './prod'
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 export default defineConfig(async (merge, { command, mode }) => {
   const baseConfig = {
-    projectName: 'chinese',
-    date: '2025-3-14',
-    designWidth: 750,
+    projectName: 'test',
+    date: '2025-3-25',
+    designWidth(input) {
+      // 配置 NutUI 375 尺寸
+      if (input?.file?.replace(/\\+/g, '/').indexOf('@nutui') > -1) {
+        return 375
+      }
+      // 全局使用 Taro 默认的 750 尺寸
+      return 750
+    },
     deviceRatio: {
       640: 2.34 / 2,
       750: 1,
       375: 2,
       828: 1.81 / 2,
     },
+    // 源码存放目录
     sourceRoot: 'src',
+    // 代码编译后的生产目录
     outputRoot: 'dist',
-    plugins: [],
+    plugins: ['@tarojs/plugin-html'],
+    // 用于配置一些全局变量供业务代码中进行使用
     defineConstants: {},
+    // 用于配置目录别名，从而方便书写代码引用路径
+    alias: {
+      '@': path.resolve(__dirname, '..', 'src'),
+    },
     copy: {
       patterns: [],
       options: {},
     },
     framework: 'vue3',
-    compiler: 'vite',
+    compiler: {
+      type: 'webpack5',
+      prebundle: {
+        enable: false,
+      },
+    },
+    cache: {
+      enable: false, // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
+    },
     mini: {
       postcss: {
         pxtransform: {
@@ -39,11 +64,33 @@ export default defineConfig(async (merge, { command, mode }) => {
           },
         },
       },
+      // 合并webpack配置
+      webpackChain(chain) {
+        chain.plugin('unplugin-vue-components').use(
+          Components({
+            resolvers: [NutUIResolver({ taro: true })],
+          }),
+        )
+        chain.plugin('unplugin-auto-import').use(
+          AutoImport({
+            imports: ['vue'],
+            dts: false,
+            eslintrc: {
+              enabled: false, // 已存在文件设置默认 false，需要更新时再打开，防止每次更新都重新生成
+              filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
+              globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+            },
+          }),
+        )
+      },
     },
     h5: {
       publicPath: '/',
       staticDirectory: 'static',
-
+      output: {
+        filename: 'js/[name].[hash:8].js',
+        chunkFilename: 'js/[name].[chunkhash:8].js',
+      },
       miniCssExtractPluginOption: {
         ignoreOrder: true,
         filename: 'css/[name].[hash].css',
@@ -62,6 +109,14 @@ export default defineConfig(async (merge, { command, mode }) => {
           },
         },
       },
+      // 合并webpack配置
+      webpackChain(chain) {
+        chain.plugin('unplugin-vue-components').use(
+          Components({
+            resolvers: [NutUIResolver({ taro: true })],
+          }),
+        )
+      },
     },
     rn: {
       appName: 'taroDemo',
@@ -72,9 +127,6 @@ export default defineConfig(async (merge, { command, mode }) => {
       },
     },
   }
-
-  process.env.BROWSERSLIST_ENV = process.env.NODE_ENV
-
   if (process.env.NODE_ENV === 'development') {
     // 本地开发构建配置（不混淆压缩）
     return merge({}, baseConfig, devConfig)

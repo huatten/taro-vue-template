@@ -24,7 +24,7 @@ module.exports = {
       jsx: true,
     },
   },
-  extends: ['alloy', 'alloy/vue', 'taro/vue3'],
+  extends: ['alloy', 'alloy/vue', 'taro/vue3', './.eslintrc-auto-import.json'],
   rules: {
     // 根据项目需求覆盖或调整规则
     // 禁用组件名必须多单词规则
