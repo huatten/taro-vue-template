@@ -1,15 +1,17 @@
-import { defineConfig } from '@tarojs/cli'
-import NutUIResolver from '@nutui/auto-import-resolver'
-import Components from 'unplugin-vue-components/webpack'
-import AutoImport from 'unplugin-auto-import/webpack'
 import path from 'path'
+
+import NutUIResolver from '@nutui/auto-import-resolver'
+import { defineConfig } from '@tarojs/cli'
+import AutoImport from 'unplugin-auto-import/webpack'
+import Components from 'unplugin-vue-components/webpack'
+
 import devConfig from './dev'
 import prodConfig from './prod'
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 export default defineConfig(async (merge, { command, mode }) => {
   const baseConfig = {
-    projectName: 'test',
+    projectName: 'taro4-vue3-template',
     date: '2025-3-25',
     designWidth(input) {
       // 配置 NutUI 375 尺寸
